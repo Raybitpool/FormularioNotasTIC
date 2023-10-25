@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de alumnos</title>
+    <style>
+        /* Input son todos los elementos con los que el usuario interactua(texto, etc...) */
+        input{
+            /* Borde por fuera del padding, "grosor, tipo de borde, color" */
+            border: 1px solid;
+            /* Border redondeados */
+            border-radius: 10px;
+            /* Anchura maxima para los input, ya que escalan en funcion del tamaño de la pagina, y se necesitan hacer más pequeños, no más grandes */
+            min-width: 200px;
+        }
+        /* Body es el fondo azul, con una anchura reducida para encajar mejor los divs */
+        body{
+            width: 70%;
+            background-color: #D7E7FA;
+            margin: auto;
+        }
+        /* Cabecera de Evaluación, dos imagenes , con un 80% de anchura del body */
+        h1{
+            /* Relleno, para ajustar cuanto ocupa la cabecera */
+            padding: 26px 40%;
+            /* Tipo de fuente */
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size:40px;
+            /* Dos imagenes, en secuencia lineal, al poner luego que no se repita la primera coseguimos que se viusalicen las dos */
+            background-image: url('Imagenes/picarralc.jpg'), url('Imagenes/portada2.jpeg');
+            background-repeat: no-repeat, repeat;
+            /* Color del texto */
+            color: rgb(0, 247, 95);
+        }
+        /* Recuadro verde, tiene 2 divs. uno con el texto, otro con el icono */
+        #info{
+            background-color:#D7FAD9;
+            padding: 30px;
+            /* Flex para manejar los divs */
+            display: flex;
+            /* Se reparten la anchura del div, entre los elementos dentro del mismo(la anchura del texto crece, hasta ajustarse a los saltos de linea <br>) */
+            justify-content: space-evenly;
+            margin-bottom: 30px;
+            border-radius: 30px;
+        }
+        /* Div del texto */
+        #info .texto{
+            border: 6px inset #F8FAD7;
+            padding: 20px;
+            /* Justificación del texto*/
+            text-align: justify;
+            /* Margen para separar la imagen, siempre que sea posible */
+            margin-right: 50px;
+        }
+        /* Recuadro amarillo, para insertar dentro el formulario */
+        #formulario{
+            background-color: #F8FAD7;
+            padding: 30px;
+            text-align: center;
+            /* Se redondean solo ciertas esquinas */
+            border-top-right-radius: 80px;
+            border-bottom-right-radius: 80px;
+            margin-bottom: 20px;
+        }
+        /* El CSS para los titulos del formulario están puestos directamente en la etiqueta */
+        /* Primera tanda de datos, con un flex en columna, y centrado */
+        #datos-basicos{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        /* Formato de los input, más específico que el general */
+        #datos-basicos input{
+            /* Margenes tanto por la derecha como por la izquierda */
+            margin-inline: 10%;
+            padding: 10px;
+            margin-top: 10px;
+            width: 40%;
+        }
+        /* Siguiente tanda de datos, colocados en fila, se ajustan en varias lineas y con un espacio igual entre sí */
+        #notas{
+            display: flex;
+            align-items: center;
+            flex-direction:row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+        /* Formato de los input de texto */
+        #notas input{
+            margin-inline: auto;
+            padding: 10px;
+            margin-top: 10px;
+            width: 20%;
+        }
+        /* Foramato del desplegable de notas */
+        #notas select{
+            border: none;
+            background-color: #D7FAD9;
+            padding: 5px;
+            border-radius: 10px;
+            /* Sombra, o una copia con menor z y desplazada poca cantidad "desp.x, desp.y" */
+            box-shadow: 2px 0px;
+        }/* Quitar la sombra al ser seleccionado */
+        #notas select:hover{
+            box-shadow: 0px 0px;
+        }
+        /* Formato de las opciones desplegadas */
+        #notas option{
+            border: none;
+            background-color: #F8FAD7;
+        }
+        /* Div del boton */
+        #confirmarbut{
+            margin-top: 10px;
+        }
+        /* Formato del boton de confirmar */
+        input[type=submit]{
+            padding: 15px 100px;
+            background-color: #D7FAD9;
+            border: none;
+            border-radius: 100px;
+            box-shadow: 2px 4px;
+        }
+        /* Quitar sombra, al seleccionarlo */
+        input[type=submit]:hover{
+            box-shadow: 0px 1px;
+            /* Cambia el tipo de cursor */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabezera de la web -->
+    <h1>EVALUACIÓN</h1>
+    <!-- Recuadro verde -->
+    <div class="texto-img" id="info">
+        <!-- Explicacion de la web -->
+        <div class="texto">
+            Bienvenido a la web de evaluación de alumnos. Deberá insertar su nombre, correo electrónico, y el nombre del alumno a evaluar. Una vez finalizado el tramite, insertará las calificaciones obtenidas por el alumno, ajustando a la vez la correspondiente calificación no numérica. Inserte enviar, y la hoja de cálculo se autocompletará con los datos insertados, a la vez que el comentario del tutor
+            
+        </div>
+        <!-- Icono, puesto en div para utilizar mejor el felx -->
+        <div class="img">
+            <img style="width: 150px;" src="Imagenes/form.png">
+        </div>
+    </div>
+    <!-- Formulario, introduce nuevas etiquetas interactivas para el usuario -->
+    <form action="/conexion.php" method="post" id="formulario">
+        <!-- Subtitulo con solo un borde debajo -->
+        <h2 style="padding-bottom:10px; border-bottom: dashed rgb(29, 5, 241) 2px;">DATOS BÁSICOS</h2>
+        <!-- Primer div con los inputs basicos -->
+        <div id="datos-basicos">
+            <!-- El type indica que se puede introducir, id es la etiqueta que recibirá ese input, y name es el nombre que se le asocia. Placholder es el texto en gris -->
+            <input type="text" placeholder="Nombre" id="nombre" name="nombre"><br><br>
+            <input type="text" placeholder="Apellidos" id="lname" name="lname"><br><br>
+            <input type="email" placeholder="Correo Electrónico" id="email" name="email"><br><br>
+            <input type="text" placeholder="Alumno a evaluar" id="alumno" name="alumno"><br><br>
+            <input type="text" placeholder="Curso del alumno" id="curso" name="curso"><br><br>
+        </div>
+        <!-- Segundo subtitulo, mismo formato -->
+        <h2 style= "padding: 20px 0px; border-top: dashed blue 2px; border-bottom: dashed blue 2px; margin-top: 40px; font-family:Verdana, Geneva, Tahoma, sans-serif;">CALIFICACIONES DEL ALUMNADO</h2>
+        <img src="Imagenes/calif.png" style="width: 100px; margin-bottom: 40px;">
+        <!-- Segundo div con los inputs numericos -->
+        <div id="notas">
+            <!-- Mismos tipos de inputs, pero solo permiten numeros -->
+            <!-- Los select son desplegables, que muestras todas las opciones que se pueden seleccionar -->
+            <!-- Cada input y select, al tener la misma asignatura se relacionan con otro div, para ajustar los dos elementos como uno solo -->
+            <!-- Aunque tengan colocada una clase, el div en si no tiene formato -->
+            <div class="asignatura">
+                <input type="number" placeholder="Matemáticas" id="mates" name="mates">
+                <select id="mates2" name="mates2">
+                    <option value="SB">Sobresaliente</option>
+                    <option value="NT">Notable</option>
+                    <option value="BN">Bien</option>
+                    <option value="SF">Suficiente</option>
+                    <option value="IN">Insuficiente</option>
+                </select>
+            </div>
+            <div>
+                <input type="number" placeholder="Lengua y Literatura" id="lengua" name="lengua">
+                <select id="lengua2" name="lengua2">
+                    <option value="SB">Sobresaliente</option>
+                    <option value="NT">Notable</option>
+                    <option value="BN">Bien</option>
+                    <option value="SF">Suficiente</option>
+                    <option value="IN">Insuficiente</option>
+                </select>
+            </div>
+            <div>
+                <input type="numnber" placeholder="Informática" id="tic" name="tic">
+                <select id="tic2" name="tic2">
+                    <option value="SB">Sobresaliente</option>
+                    <option value="NT">Notable</option>
+                    <option value="BN">Bien</option>
+                    <option value="SF">Suficiente</option>
+                    <option value="IN">Insuficiente</option>
+                </select>
+            </div>
+            <div>
+                <input type="number" placeholder="Filosofía" id="filo" name="filo">
+                <select id="filo2" name="filo2">
+                    <option value="SB">Sobresaliente</option>
+                    <option value="NT">Notable</option>
+                    <option value="BN">Bien</option>
+                    <option value="SF">Suficiente</option>
+                    <option value="IN">Insuficiente</option>
+                </select>
+            </div>
+            <div>
+                <input type="number" placeholder="Historia de España" id="historia" name="historia">
+                <select id="historia2" name="historia2">
+                    <option value="SB">Sobresaliente</option>
+                    <option value="NT">Notable</option>
+                    <option value="BN">Bien</option>
+                    <option value="SF">Suficiente</option>
+                    <option value="IN">Insuficiente</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <!-- Textarea permite colocar varias lineas de texto, a comparacion de los inputs que permiten una línea -->
+            <textarea id="comment" name="comment" placeholder="Comentarios relevantes sobre el alumno..." 
+            style="margin-top: 40px; border-radius: 20px; width: 80%; height: 100px; padding: 15px;"></textarea>
+        </div>
+        <!-- El boton que finaliza el formulario -->
+        <div id="confirmarbut">
+            <input type="submit" value="CONFIRMAR">
+        </div>
+    </form>
+</body>
+</html>
